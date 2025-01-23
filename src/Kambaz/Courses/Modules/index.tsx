@@ -1,7 +1,6 @@
 export default function Modules() {
     return (
       <div>
-
         <button 
           type="button"
           // onClick={() => print("Collapse all")}
