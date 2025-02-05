@@ -46,3 +46,37 @@ body * {
 .wd-module {
     border: 0.5px solid #c7cdd1 !important;
 }
+
+#wd-search-assignment {
+    border-width: 0px;
+    outline: none;
+    height: 40px;
+}
+
+#wd-search-assignment-container {
+    border-radius: 10px;
+    border: 1px solid #c7cdd1 !important;
+}
+
+.wd-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.wd-assignment-list-item {
+    border: 0.5px solid #c7cdd1 !important;
+}
+
+.wd-assignment-link {
+    color: #4c5860;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.wd-assignment-link:hover {
+    text-decoration: underline;
+}
+
+.wd-assignment-details {
+    color: #4c5860;
+}
