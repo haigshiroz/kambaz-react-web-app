@@ -7,7 +7,7 @@ import { LuNotebookPen } from "react-icons/lu";
 
 export default function Assignments() {
   return (
-    <div id="wd-assignments" className="p-5">
+    <div id="wd-assignments" className="p-3">
       <div>
         {/* Header */}
         <AssignmentsControls />
@@ -40,9 +40,7 @@ export default function Assignments() {
                     <div className="fs-6">
                       <span style={{color: "#b52828"}}  >Multiple Modules </span>
                       <span> | <b>Not available until</b> </span>
-                      <span className="wd-assignment-available-date"> May 6 at 12:00am |</span>
-                      <br />
-
+                      <span className="wd-assignment-available-date"> May 6 at 12:00am | </span>
                       <span><b>Due</b></span>
                       <span className="wd-assignment-due-date"> May 13 at 11:59pm </span>
                       <span> | </span>
@@ -77,9 +75,7 @@ export default function Assignments() {
                     <div className="fs-6">
                       <span style={{color: "#b52828"}}>Multiple Modules </span>
                       <span> | <b>Not available until</b> </span>
-                      <span className="wd-assignment-available-date"> May 13 at 12:00am |</span>
-                      <br />
-
+                      <span className="wd-assignment-available-date"> May 13 at 12:00am | </span>
                       <span><b>Due</b></span>
                       <span className="wd-assignment-due-date"> May 20 at 11:59pm </span>
                       <span> | </span>
@@ -115,9 +111,7 @@ export default function Assignments() {
                     <div className="fs-6">
                       <span style={{color: "#b52828"}}>Multiple Modules </span>
                       <span> | <b>Not available until</b> </span>
-                      <span className="wd-assignment-available-date"> May 20 at 12:00am |</span>
-                      <br />
-
+                      <span className="wd-assignment-available-date"> May 20 at 12:00am | </span>
                       <span><b>Due</b></span>
                       <span className="wd-assignment-due-date"> May 27 at 11:59pm </span>
                       <span> | </span>
