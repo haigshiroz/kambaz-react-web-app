@@ -1,6 +1,5 @@
 import Add from "./Add";
 import AddingAndRemovingToFromArrays from "./AddingAndRemovingToFromArrays";
-import AddPathParameters from "./AddPathParameters";
 import ArrayIndexAndLength from "./ArrayIndexAndLength";
 import ArrowFunctions from "./ArrowFunctions";
 import BooleanVariables from "./BooleanVariables";
@@ -34,6 +33,8 @@ import VariablesAndConstants from "./VariablesAndConstants";
 import VariableTypes from "./VariableTypes";
 
 export default function Lab3() {
+  console.log('Hello World!');
+
   return (
     <div>
       <h2>Lab 3</h2>
