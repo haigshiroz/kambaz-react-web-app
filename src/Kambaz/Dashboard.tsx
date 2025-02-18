@@ -17,7 +17,7 @@ export default function Dashboard() {
               <Card>
                 <Link to={`/Kambaz/Courses/${course._id}/Home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark">
-                  <Card.Img variant="top" src="/images/CourseBackdrop1.png" width="100%" height={160} />
+                  <Card.Img variant="top" src={course.image_src} width="100%" height={160} />
 
                   <Card.Body>
                     <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
