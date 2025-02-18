@@ -1,17 +1,23 @@
 import { Button, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
 import { IoIosClose } from "react-icons/io";
+import { assignments } from "../../Database";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = assignments.filter((assignment) => (assignment.course === cid)).find((assignment) => (assignment._id === aid))  ;
+
   return (
     <div id="wd-assignments-editor" className="px-5">
 
       <FormGroup className="mb-4" controlId="wd-name" >
         <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" defaultValue="A1 - ENV + HTML" id="wd-name" />
+        <FormControl type="text" defaultValue={`${assignment && assignment.title}`} id="wd-name" />
       </FormGroup>
 
       <FormControl type="text" as="textarea" id="wd-description" className="mb-4" rows={5}
-        defaultValue={"The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section Links to each of the lab assignments Link to the Kanbaz application Links to all relevant source code repositories The Kanbaz application should include a link to navigate back to the landing page."}
+        defaultValue={`${assignment && assignment.description}`}
       />
 
       <div id="wd-assignment-editor-table">
@@ -22,7 +28,7 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormControl type="text" defaultValue="100" id="wd-points" />
+            <FormControl type="text" defaultValue={`${assignment && assignment.points}`} id="wd-assignment-points" />
           </Col>
         </FormGroup>
 
@@ -33,8 +39,8 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormSelect id="wd-group">
-              <option selected value="ASSIGNMENTS">Assignments</option>
+            <FormSelect id="wd-group" defaultValue={`${assignment && assignment.assignment_group}`}>
+              <option value="ASSIGNMENTS">Assignments</option>
               <option value="QUIZZES">Quizzes</option>
               <option value="EXAM">Exam</option>
               <option value="PROJECT">Project</option>
@@ -49,8 +55,8 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormSelect id="wd-display-grade-as">
-              <option selected value="PERCENTAGE">Percentage</option>
+            <FormSelect id="wd-display-grade-as" defaultValue={`${assignment && assignment.display_grade_as}`}>
+              <option value="PERCENTAGE">Percentage</option>
               <option value="COMPLETENE_INCOMPLETE">Complete/Incomplete</option>
               <option value="POINTS">Points</option>
               <option value="LETTER_GRADE">Letter Grade</option>
@@ -68,9 +74,9 @@ export default function AssignmentEditor() {
           </Col>
           <Col xs={10}>
             <div className="border rounded p-4">
-              <FormSelect className="me-1 mb-4" id="wd-submission-type">
+              <FormSelect className="me-1 mb-4" id="wd-submission-type" defaultValue={`${assignment && assignment.submission_type}`}>
                 <option value="NO_SUBMISSION">No Submission</option>
-                <option selected value="ONLINE">Online</option>
+                <option value="ONLINE">Online</option>
                 <option value="ON_PAPER">On Paper</option>
                 <option value="EXTERNAL_TOOL">External Tool</option>
                 <option value="LUCID">Lucid</option>
@@ -120,7 +126,7 @@ export default function AssignmentEditor() {
               <div className="wd-due-date mb-4 ">
                 <FormGroup as={Row} className="" controlId="wd-due-date">
                   <FormLabel className="wd-due-date"> <b>Due</b> </FormLabel>
-                  <FormControl type="datetime-local" className="ms-2" id="wd-due-date" defaultValue={"2024-05-13T23:59"}>
+                  <FormControl type="datetime-local" className="ms-2" id="wd-due-date" defaultValue={`${assignment && assignment.date_due}`}>
                   </FormControl>
                 </FormGroup>
               </div>
@@ -133,7 +139,7 @@ export default function AssignmentEditor() {
                   <Col className="float-start me-1">
                     <FormGroup as={Row} className="" controlId="wd-available-from">
                       <FormLabel className="wd-available-from"> <b>Available From</b> </FormLabel>
-                      <FormControl type="datetime-local" className="ms-2" id="wd-available-from" defaultValue={"2024-05-06T00:01"}>
+                      <FormControl type="datetime-local" className="ms-2" id="wd-available-from" defaultValue={`${assignment && assignment.date_available}`}>
                       </FormControl>
                     </FormGroup>
                   </Col>
@@ -141,7 +147,7 @@ export default function AssignmentEditor() {
                   <Col className="float-start ms-1">
                     <FormGroup as={Row} className="" controlId="wd-available-until">
                       <FormLabel className="wd-available-until"> <b>Until</b> </FormLabel>
-                      <FormControl type="datetime-local" className="mb-4 ms-2" id="wd-available-until" defaultValue={""}>
+                      <FormControl type="datetime-local" className="mb-4 ms-2" id="wd-available-until" defaultValue={`${assignment && assignment.date_until}`}>
                       </FormControl>
                     </FormGroup>
                   </Col>
@@ -153,11 +159,11 @@ export default function AssignmentEditor() {
         <hr />
         <Row className="float-end">
           <div id="wd-control-assignment-editor" className="text-nowrap">
-            <Button variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
+            <Button as={Link as any} to={`/Kambaz/Courses/${cid}/Assignments/`} variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
               Save
             </Button>
 
-            <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
+            <Button as={Link as any} to={`/Kambaz/Courses/${cid}/Assignments/`} variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
               Cancel
             </Button>
           </div>
