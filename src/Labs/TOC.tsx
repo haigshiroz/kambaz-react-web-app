@@ -6,11 +6,13 @@ export default function TOC() {
 
   return (
     <Nav variant="pills" id="wd-toc">
-      <Nav.Item>
+
+      {/* NOTE: In Chapter 3, the "Labs" pill is no longer present but there was no explicit mention of removing it */}
+      {/* <Nav.Item>
         <Nav.Link href="#/Labs">
           Labs
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
 
       <Nav.Item>
         <Nav.Link href="#/Labs/Lab1" id="wd-a1" active={pathname.includes("Lab1")}>

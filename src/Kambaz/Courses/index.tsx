@@ -14,11 +14,28 @@ export default function Courses() {
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
 
+  const breadcrumb = () => {
+    const split = pathname.split("/");
+    const separator = " > "
+    let ret = ""
+
+    if (course) {
+      ret = course.name + separator + split[4]
+      if (split[5]) {
+        ret += separator + split[5]
+      }
+    }
+
+    return ret
+  }
+
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {course && course.name} &gt; {pathname.split("/")[4]}
+
+        {/* Breadcrumb */}
+        {breadcrumb()}
       </h2>
 
       <hr />
