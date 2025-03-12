@@ -8,7 +8,7 @@ export default function EventObject() {
         delete e.view;
         setEvent(e);
     };
-
+     
     return (
         <div>
             <h2>Event Object</h2>
