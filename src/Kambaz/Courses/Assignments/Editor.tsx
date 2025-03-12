@@ -1,25 +1,61 @@
 import { Button, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
 import { IoIosClose } from "react-icons/io";
-import { assignments } from "../../Database";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssignment, updateAssignments } from "./reducer";
+import { useState } from "react";
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
-  const assignment = assignments.filter((assignment) => (assignment.course === cid)).find((assignment) => (assignment._id === aid))  ;
+  const { assignment } = useSelector((state: any) => state.assignmentsReducer);
+
+  const dispatch = useDispatch();
+
+  const [title, setTitle] = useState(assignment.title);
+  const [dateAvailable, setDateAvailable] = useState(assignment.date_available);
+  const [dateDue, setDateDue] = useState(assignment.date_due);
+  const [dateUntil, setDateUntil] = useState(assignment.date_until);
+  const [points, setPoints] = useState(assignment.points);
+  const [description, setDescription] = useState(assignment.description);
+  const [group, setGroup] = useState(assignment.assignment_group);
+  const [displayGradeAs, setDisplayGradeAs] = useState(assignment.display_grade_as);
+  const [submissionType, setSubmissionType] = useState(assignment.submission_type);
+
+  const updateAssignment = () => {
+    const newAssignment = {
+      "_id": assignment._id,
+      "title": title,
+      "course": assignment.course,
+      "date_available": dateAvailable,
+      "date_due": dateDue,
+      "date_until": dateUntil,
+      "points": points,
+      "description": description,
+      "assignment_group": group,
+      "display_grade_as": displayGradeAs,
+      "submission_type": submissionType,
+    }
+
+    dispatch(setAssignment(newAssignment));
+    dispatch(updateAssignments());
+  }
+
 
   return (
     <div id="wd-assignments-editor" className="px-5">
 
+      {/* Assignment Name */}
       <FormGroup className="mb-4" controlId="wd-name" >
         <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" defaultValue={`${assignment && assignment.title}`} id="wd-name" />
+        <FormControl type="text" value={title} id="wd-name" onChange={(e) => { setTitle(e.target.value); }}/>
       </FormGroup>
 
+      {/* Assignment description */}
       <FormControl type="text" as="textarea" id="wd-description" className="mb-4" rows={5}
-        defaultValue={`${assignment && assignment.description}`}
+        value={description} onChange={(e) => { setDescription(e.target.value); }}
       />
 
+
+      {/* Number of points */}
       <div id="wd-assignment-editor-table">
         <FormGroup as={Row} className="d-flex flex-row mb-4" controlId="wd-assignment-points" >
           <Col xs={2}>
@@ -28,10 +64,11 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormControl type="text" defaultValue={`${assignment && assignment.points}`} id="wd-assignment-points" />
+            <FormControl type="text" value={points} onChange={(e) => { setPoints(e.target.value); }} id="wd-assignment-points" />
           </Col>
         </FormGroup>
 
+        {/* Group */}
         <FormGroup as={Row} className="d-flex flex-row mb-4" controlId="wd-group" >
           <Col xs={2}>
             <FormLabel className="pe-3 float-end">
@@ -39,7 +76,7 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormSelect id="wd-group" defaultValue={`${assignment && assignment.assignment_group}`}>
+            <FormSelect id="wd-group" value={group} onChange={(e) => { setGroup(e.target.value); }}>
               <option value="ASSIGNMENTS">Assignments</option>
               <option value="QUIZZES">Quizzes</option>
               <option value="EXAM">Exam</option>
@@ -48,6 +85,7 @@ export default function AssignmentEditor() {
           </Col>
         </FormGroup>
 
+        {/* Display Grade As */}
         <FormGroup as={Row} className="d-flex flex-row mb-4" controlId="wd-display-grade-as" >
           <Col xs={2}>
             <FormLabel className="pe-3 float-end">
@@ -55,7 +93,7 @@ export default function AssignmentEditor() {
             </FormLabel>
           </Col>
           <Col xs={10}>
-            <FormSelect id="wd-display-grade-as" defaultValue={`${assignment && assignment.display_grade_as}`}>
+            <FormSelect id="wd-display-grade-as" value={displayGradeAs} onChange={(e) => { setDisplayGradeAs(e.target.value); }}>
               <option value="PERCENTAGE">Percentage</option>
               <option value="COMPLETENE_INCOMPLETE">Complete/Incomplete</option>
               <option value="POINTS">Points</option>
@@ -66,6 +104,7 @@ export default function AssignmentEditor() {
           </Col>
         </FormGroup>
 
+        {/* Submission Type */}
         <FormGroup as={Row} className="d-flex flex-row mb-4" controlId="wd-submission-type" >
           <Col xs={2}>
             <FormLabel className="pe-3 float-end">
@@ -74,7 +113,7 @@ export default function AssignmentEditor() {
           </Col>
           <Col xs={10}>
             <div className="border rounded p-4">
-              <FormSelect className="me-1 mb-4" id="wd-submission-type" defaultValue={`${assignment && assignment.submission_type}`}>
+              <FormSelect className="me-1 mb-4" id="wd-submission-type" value={submissionType} onChange={(e) => { setSubmissionType(e.target.value); }}>
                 <option value="NO_SUBMISSION">No Submission</option>
                 <option value="ONLINE">Online</option>
                 <option value="ON_PAPER">On Paper</option>
@@ -98,7 +137,7 @@ export default function AssignmentEditor() {
         </FormGroup>
 
 
-
+        {/* Assign To */}
         <FormGroup as={Row} className="d-flex flex-row mb-4" controlId="wd-assign-to" >
           <Col xs={2}>
             <FormLabel className="pe-3 float-end">
@@ -126,7 +165,7 @@ export default function AssignmentEditor() {
               <div className="wd-due-date mb-4 ">
                 <FormGroup as={Row} className="" controlId="wd-due-date">
                   <FormLabel className="wd-due-date"> <b>Due</b> </FormLabel>
-                  <FormControl type="datetime-local" className="ms-2" id="wd-due-date" defaultValue={`${assignment && assignment.date_due}`}>
+                  <FormControl type="datetime-local" className="ms-2" id="wd-due-date" value={dateDue} onChange={(e) => { setDateDue(e.target.value); }}>
                   </FormControl>
                 </FormGroup>
               </div>
@@ -139,7 +178,7 @@ export default function AssignmentEditor() {
                   <Col className="float-start me-1">
                     <FormGroup as={Row} className="" controlId="wd-available-from">
                       <FormLabel className="wd-available-from"> <b>Available From</b> </FormLabel>
-                      <FormControl type="datetime-local" className="ms-2" id="wd-available-from" defaultValue={`${assignment && assignment.date_available}`}>
+                      <FormControl type="datetime-local" className="ms-2" id="wd-available-from" value={dateAvailable} onChange={(e) => { setDateAvailable(e.target.value); }}>
                       </FormControl>
                     </FormGroup>
                   </Col>
@@ -147,7 +186,7 @@ export default function AssignmentEditor() {
                   <Col className="float-start ms-1">
                     <FormGroup as={Row} className="" controlId="wd-available-until">
                       <FormLabel className="wd-available-until"> <b>Until</b> </FormLabel>
-                      <FormControl type="datetime-local" className="mb-4 ms-2" id="wd-available-until" defaultValue={`${assignment && assignment.date_until}`}>
+                      <FormControl type="datetime-local" className="mb-4 ms-2" id="wd-available-until" value={dateUntil} onChange={(e) => { setDateUntil(e.target.value); }}>
                       </FormControl>
                     </FormGroup>
                   </Col>
@@ -159,11 +198,11 @@ export default function AssignmentEditor() {
         <hr />
         <Row className="float-end">
           <div id="wd-control-assignment-editor" className="text-nowrap">
-            <Button as={Link as any} to={`/Kambaz/Courses/${cid}/Assignments/`} variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
+            <Button as={Link as any} onClick={updateAssignment} to={`/Kambaz/Courses/${assignment.course}/Assignments/`} variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
               Save
             </Button>
 
-            <Button as={Link as any} to={`/Kambaz/Courses/${cid}/Assignments/`} variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
+            <Button as={Link as any} to={`/Kambaz/Courses/${assignment.course}/Assignments/`} variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
               Cancel
             </Button>
           </div>

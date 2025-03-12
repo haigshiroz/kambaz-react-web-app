@@ -30,7 +30,7 @@ export default function Modules() {
 
         {modules.filter((module: any) => module.course === cid).map((module: any) => (
           // One module
-          <ListGroup.Item className="wd-module p-0 mb-5 fs-5">
+          <ListGroup.Item className="wd-module p-0 mb-5 fs-5" key={module._id}>
             {/* Header of the module */}
             <div className="wd-title p-3 ps-2 bg-secondary">
               {currentUser.role === "FACULTY" &&
@@ -59,7 +59,7 @@ export default function Modules() {
               {module.lessons && (
                 module.lessons.map((lesson: any) => (
                   // One lesson
-                  <ListGroup.Item className="wd-lesson p-3 ps-1">
+                  <ListGroup.Item className="wd-lesson p-3 ps-1" key={lesson._id}>
                     {currentUser.role === "FACULTY" &&
                       <BsGripVertical className="me-2 fs-3" />
                     }

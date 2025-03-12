@@ -3,7 +3,10 @@ import { Button } from "react-bootstrap";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { useSelector } from "react-redux";
 
-export default function AssignmentsControls() {
+export default function AssignmentsControls(
+    { newAssignment }: {
+        newAssignment: () => void;
+    }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     return (
@@ -17,7 +20,7 @@ export default function AssignmentsControls() {
 
             {currentUser.role === "FACULTY" &&
                 <div className="d-flex flex-row float-end">
-                    <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment">
+                    <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment" onClick={newAssignment}>
                         <FaPlus className="position-relative me-2 text-white" style={{ bottom: "1px" }} />
                         Assignment
                     </Button>
