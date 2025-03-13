@@ -11,7 +11,7 @@ import store from "./store";
 export default function Labs() {
   return (
     <Provider store={store}>
-      <div id="wd-labs">
+      <div className="m-1" id="wd-labs">
         <h1>Haig Shirozian</h1>
         <h1>CS4550 Section 2</h1>
         <h1>Labs</h1>
