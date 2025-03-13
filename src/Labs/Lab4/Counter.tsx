@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 export default function Counter() {
     // let count = 7;
@@ -10,13 +11,13 @@ export default function Counter() {
         <div id="wd-counter-use-state">
             <h2>Counter: {count}</h2>
 
-            <button onClick={() => { setCount(count + 1); console.log(count); }} id="wd-counter-up-click">
+            <Button className="btn-success m-1" onClick={() => { setCount(count + 1); console.log(count); }} id="wd-counter-up-click">
                 Up
-            </button>
+            </Button>
 
-            <button onClick={() => { setCount(count - 1); console.log(count); }} id="wd-counter-down-click">
+            <Button className="btn-danger m-1"onClick={() => { setCount(count - 1); console.log(count); }} id="wd-counter-down-click">
                 Down
-            </button>
+            </Button>
             
             <hr />
         </div>);
