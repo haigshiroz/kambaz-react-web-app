@@ -7,9 +7,9 @@ const createEmptyAssignment = () => {
         "_id": uuidv4(),
         "title": "Enter Title",
         "course": null, // cid
-        "date_available": new Date(),
-        "date_due": new Date(),
-        "date_until": new Date(),
+        "date_available": JSON.stringify(new Date()),
+        "date_due": JSON.stringify(new Date()),
+        "date_until": JSON.stringify(new Date()),
         "points": 100,
         "description": "Enter description",
         "assignment_group": "ASSIGNMENTS",
@@ -37,11 +37,11 @@ const assignmentsSlice = createSlice({
         updateAssignments: (state,) => {
             // Check if the assignment is in the current list. If not, add it to the end
             if (state.assignments.find((a: any) => a._id === state.assignment._id) === undefined) {
+                // New assignment
                 state.assignments = [...state.assignments, state.assignment] as any;
-                console.log("New assignment");
             } else {
+                // Existing assignment
                 state.assignments = state.assignments.map((a: any) => a._id === state.assignment._id ? state.assignment : a) as any;
-                console.log("Existing assignment");
             }
         },
 
