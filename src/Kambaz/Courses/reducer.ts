@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const createEmptyCourse = () => {
     return {
-        _id: "New id",
+        _id: uuidv4(),
         name: "New Course",
         number: "New Number",
         startDate: JSON.stringify(new Date()),
@@ -29,7 +29,7 @@ const coursesSlice = createSlice({
 
     reducers: {
         addNewCourse: (state,) => {
-            state.courses = [...state.courses, { ...state.course, _id: uuidv4() }] as any;
+            state.courses = [...state.courses, state.course] as any;
             state.course = createEmptyCourse();
         },
 
