@@ -6,7 +6,7 @@ import { useState } from "react";
 import { addEnrollment, removeEnrollment } from "./Courses/People/reducer";
 
 export default function Dashboard() {
-  const [showAll, setShowAll] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);

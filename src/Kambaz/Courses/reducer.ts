@@ -12,7 +12,7 @@ const createEmptyCourse = () => {
         department: "New Department",
         credits: 4,
         description: "New Description",
-        image_src: undefined,
+        image_src: "/images/CourseBackdrop3.png",
     }
 }
 
@@ -38,7 +38,7 @@ const coursesSlice = createSlice({
         },
 
         deleteCourse: (state, { payload: courseId }) => {
-            state.courses = courses.filter((c: any) => c._id !== courseId);
+            state.courses = state.courses.filter((c: any) => c._id !== courseId);
         },
 
         updateCourse: (state,) => {
