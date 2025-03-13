@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { addNewCourse, deleteCourse, setCourse, updateCourse } from "./Courses/reducer";
 import { useState } from "react";
 import { addEnrollment, removeEnrollment } from "./Courses/People/reducer";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Dashboard() {
   const [showAll, setShowAll] = useState(false);
@@ -16,11 +17,13 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const createNewCourse = () => {
-    dispatch(addNewCourse());
+    const newId = uuidv4();
+
+    dispatch(addNewCourse(newId));
 
     const instructorEnrollment = {
       "user": currentUser._id,
-      "course": course._id,
+      "course": newId,
     };
 
     dispatch(addEnrollment(instructorEnrollment));

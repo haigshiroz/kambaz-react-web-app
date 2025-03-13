@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { courses } from "../Database";
-import { v4 as uuidv4 } from "uuid";
 
 const createEmptyCourse = () => {
     return {
-        _id: uuidv4(),
+        _id: "new Id",
         name: "New Course",
         number: "New Number",
         startDate: JSON.stringify(new Date()),
@@ -28,8 +27,8 @@ const coursesSlice = createSlice({
     initialState,
 
     reducers: {
-        addNewCourse: (state,) => {
-            state.courses = [...state.courses, state.course] as any;
+        addNewCourse: (state, {payload: uuid}) => {
+            state.courses = [...state.courses, {...state.course, _id: uuid}] as any;
             state.course = createEmptyCourse();
         },
 
