@@ -1,4 +1,6 @@
 import EnvironmentVariables from "./EnvironmentVariables";
+import PathParameters from "./PathParameters";
+import QueryParameters from "./QueryParameters";
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 
 
@@ -15,6 +17,10 @@ export default function Lab5() {
             <hr />
 
             <EnvironmentVariables />
+
+            <PathParameters />
+
+            <QueryParameters />
         </div>
     );
 }
