@@ -49,11 +49,12 @@ export default function WorkingWithObjects() {
                 href={`${ASSIGNMENT_API_URL}/completed/${assignment.completed}`}>
                 Update Completed
             </a>
-            <label>
-                <input id="wd-assignment-completed" type="checkbox" checked={assignment.completed} onChange={() =>
-                    setAssignment({ ...assignment, completed: !assignment.completed })} /> Completed?
-            </label>
-            
+            <div className="form-check form-switch">
+                <input className="form-check-input" id="wd-assignment-completed" type="checkbox" checked={assignment.completed} onChange={() =>
+                    setAssignment({ ...assignment, completed: !assignment.completed })} />
+                <label className="form-check-label" htmlFor="wd-assignment-completed"> Completed? </label>
+            </div>
+
             <hr />
             <h4>Retrieving Objects</h4>
             <a id="wd-retrieve-assignments" className="btn btn-primary"
