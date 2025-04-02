@@ -27,8 +27,8 @@ const coursesSlice = createSlice({
     initialState,
 
     reducers: {
-        addNewCourse: (state, {payload: uuid}) => {
-            state.courses = [...state.courses, {...state.course, _id: uuid}] as any;
+        addNewCourse: (state, {payload: course}) => {
+            state.courses = [...state.courses, course] as any;
             state.course = createEmptyCourse();
         },
 

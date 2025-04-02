@@ -90,8 +90,8 @@ export default function WorkingWithArrays() {
             <FormControl defaultValue={todo.id} className="w-25 float-start me-5"
                 onChange={(e) => setTodo({ ...todo, id: e.target.value })} />
             <div className="form-check form-switch">
-                <input className="form-check-input" id="wd-todo-completed" type="checkbox" checked={todo.completed} onChange={() =>
-                    setTodo({ ...todo, completed: !todo.completed })} />
+                <input className="form-check-input" id="wd-todo-completed" type="checkbox" checked={todo.completed}
+                    onChange={() => setTodo({ ...todo, completed: !todo.completed })} />
                 <label className="form-check-label" htmlFor="wd-todo-completed"> Completed? </label>
             </div>
             <br />

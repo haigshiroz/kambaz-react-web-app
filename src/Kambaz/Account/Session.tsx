@@ -17,10 +17,11 @@ export default function Session({ children }: { children: any }) {
         setPending(false);
     };
 
+    // When first loaded
     useEffect(() => {
         fetchProfile();
     }, []);
-    
+
     if (!pending) {
         return children;
     }
