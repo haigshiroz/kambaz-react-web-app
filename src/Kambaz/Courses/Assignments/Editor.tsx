@@ -2,8 +2,11 @@ import { Button, Col, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, 
 import { IoIosClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setAssignment, updateAssignments } from "./reducer";
+import { addAssignment, setAssignment, updateAssignment } from "./reducer";
 import { useState } from "react";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+
 
 export default function AssignmentEditor() {
   const { assignment } = useSelector((state: any) => state.assignmentsReducer);
@@ -20,7 +23,7 @@ export default function AssignmentEditor() {
   const [displayGradeAs, setDisplayGradeAs] = useState(assignment.display_grade_as);
   const [submissionType, setSubmissionType] = useState(assignment.submission_type);
 
-  const updateAssignment = () => {
+  const saveAssignment = async () => {
     const newAssignment = {
       "_id": assignment._id,
       "title": title,
@@ -35,8 +38,22 @@ export default function AssignmentEditor() {
       "submission_type": submissionType,
     }
 
-    dispatch(setAssignment(newAssignment));
-    dispatch(updateAssignments());
+    const assignments = await coursesClient.findAssignmentsForCourse(assignment.course as string);
+
+    let serverAssignmentResult = null;
+
+    // Check if the assignment is in the current list. If not, add it to the end
+    if (assignments.find((a: any) => a._id === assignment._id) === undefined) {
+      // New assignment - POST
+      serverAssignmentResult = await coursesClient.createASsignmentForCourse(assignment.course, newAssignment);
+      dispatch(addAssignment(serverAssignmentResult)); // Add the assignment to local list of assignments
+    } else {
+      // Existing assignment - PUT
+      serverAssignmentResult = await assignmentsClient.updateAssignment(newAssignment);
+      dispatch(updateAssignment(serverAssignmentResult)); // Update the assignment in the local list of assignments
+    }
+
+    dispatch(setAssignment(serverAssignmentResult)); // Set the assignment as the "focal" one (i.e. being edited)
   }
 
 
@@ -46,7 +63,7 @@ export default function AssignmentEditor() {
       {/* Assignment Name */}
       <FormGroup className="mb-4" controlId="wd-name" >
         <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" value={title} id="wd-name" onChange={(e) => { setTitle(e.target.value); }}/>
+        <FormControl type="text" value={title} id="wd-name" onChange={(e) => { setTitle(e.target.value); }} />
       </FormGroup>
 
       {/* Assignment description */}
@@ -198,7 +215,7 @@ export default function AssignmentEditor() {
         <hr />
         <Row className="float-end">
           <div id="wd-control-assignment-editor" className="text-nowrap">
-            <Button as={Link as any} onClick={updateAssignment} to={`/Kambaz/Courses/${assignment.course}/Assignments/`} variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
+            <Button as={Link as any} onClick={saveAssignment} to={`/Kambaz/Courses/${assignment.course}/Assignments/`} variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
               Save
             </Button>
 

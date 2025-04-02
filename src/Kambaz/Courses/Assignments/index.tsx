@@ -5,7 +5,9 @@ import AssignmentGroupControlButtons from "./AssignmentGroupControlButtons";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import AssignmentLink from "./AssignmentLink";
-import { newAssignment } from "./reducer";
+import { setAssignments, newAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import { useEffect } from "react";
 
 
 export default function Assignments() {
@@ -15,6 +17,16 @@ export default function Assignments() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { assignment, assignments } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
+
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
 
   const createNewAssignment = () => {
@@ -46,7 +58,7 @@ export default function Assignments() {
           {/* List of assignments in that "module" */}
           <ListGroup className="wd-lessons rounded-0">
 
-            {assignments.filter((assignment: any) => (assignment.course === cid)).map((assignment: any) => (
+            {assignments.map((assignment: any) => (
               <AssignmentLink assignment={assignment} key={cid + "," + assignment._id} />
             ))}
 

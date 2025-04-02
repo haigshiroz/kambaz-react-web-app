@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { deleteAssignment, setAssignment } from "./reducer";
 import { useNavigate } from "react-router";
+import * as assignmentsClient from "./client";
+
 
 export default function AssignmentLink(
     { assignment }: {
@@ -33,6 +35,11 @@ export default function AssignmentLink(
             dispatch(setAssignment(assignment));
             navigate(`/Kambaz/Courses/${assignment.course}/Assignments/${assignment._id}`);
         }
+    }
+
+    const deleteAssignmentHelper = async () => {
+        await assignmentsClient.deleteAssignment(assignment._id);
+        dispatch(deleteAssignment(assignment._id));
     }
 
     return (
@@ -72,7 +79,7 @@ export default function AssignmentLink(
 
                 <div className="d-flex align-items-center justify-content-center float-end" >
                     {currentUser.role === "FACULTY" &&
-                        <AssignmentControlButtons deleteAssignment={() => dispatch(deleteAssignment(assignment._id))} />
+                        <AssignmentControlButtons deleteAssignment={deleteAssignmentHelper} />
                     }
                 </div>
             </div>
