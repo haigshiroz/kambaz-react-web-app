@@ -20,6 +20,7 @@ export default function Dashboard() {
 
   const dispatch = useDispatch();
 
+  // Gets all courses, the current courses this user is in, and all enrollments 
   const fetchCoursesAndCoursesUserIsInAndEnrollments = async () => {
     try {
       const serverCoursesEnrolledIn = await userClient.findMyCourses();
@@ -42,10 +43,7 @@ export default function Dashboard() {
     dispatch(addNewCourse(newCourse));
 
     // Locally add the new enrollment (since not updated with database)
-    const instructorEnrollment = {
-      "user": currentUser._id,
-      "course": newCourse._id,
-    };
+    const instructorEnrollment = {"user": currentUser._id, "course": newCourse._id,};
     dispatch(addEnrollment(instructorEnrollment));
 
     // Update display
