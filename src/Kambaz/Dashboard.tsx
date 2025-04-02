@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addNewCourse, deleteCourse, setCourse, updateCourse } from "./Courses/reducer";
 import { useEffect, useState } from "react";
-import { addEnrollment, removeEnrollment } from "./Courses/People/reducer";
+import { setEnrollments, addEnrollment, removeEnrollment } from "./Courses/People/reducer";
 import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
+import * as enrollmentClient from "./Courses/People/client";
 
 
 export default function Dashboard() {
@@ -18,6 +19,21 @@ export default function Dashboard() {
   const { course } = useSelector((state: any) => state.coursesReducer);
 
   const dispatch = useDispatch();
+
+  const fetchCoursesAndCoursesUserIsInAndEnrollments = async () => {
+    try {
+      const serverCoursesEnrolledIn = await userClient.findMyCourses();
+      setCoursesFromServer(serverCoursesEnrolledIn);
+
+      const enrollments = await enrollmentClient.getEnrollments();
+      dispatch(setEnrollments(enrollments)) ;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
+  }, [currentUser]);
 
   const createNewCourse = async () => {
     const newCourse = await userClient.createCourse(course);
@@ -33,7 +49,7 @@ export default function Dashboard() {
     dispatch(addEnrollment(instructorEnrollment));
 
     // Update display
-    fetchCoursesAndCoursesUserIsIn();
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
   }
 
   const deleteCourseHelper = async (courseId: string) => {
@@ -47,7 +63,7 @@ export default function Dashboard() {
       console.error("Error deleting a course");
     }
 
-    fetchCoursesAndCoursesUserIsIn();
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
   };
 
   const updateCourseHelper = async () => {
@@ -62,25 +78,28 @@ export default function Dashboard() {
       console.error("Error updating a course");
     }
 
-    fetchCoursesAndCoursesUserIsIn();
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
   };
 
-  const fetchCoursesAndCoursesUserIsIn = async () => {
-    try {
-      const serverCoursesEnrolledIn = await userClient.findMyCourses();
-      setCoursesFromServer(serverCoursesEnrolledIn);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchCoursesAndCoursesUserIsIn();
-  }, [currentUser]);
+  const createEnrollmentHelper = async (userId: string, courseId: string) => {
+    await enrollmentClient.createEnrollment(userId, courseId);
+    dispatch(addEnrollment({"user": userId, "course": courseId}));
+
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
+  }
+
+  const removeEnrollmentHelper = async (userId: string, courseId: string) => {
+    await enrollmentClient.deleteEnrollment(userId, courseId);
+    dispatch(removeEnrollment({"user": userId, "course": courseId}));
+
+    fetchCoursesAndCoursesUserIsInAndEnrollments();
+  }
 
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <h1 id="wd-dashboard-title">Dashboard</h1> 
+      <hr />
       {currentUser.role == "FACULTY" &&
         <div>
           <h5>
@@ -164,11 +183,7 @@ export default function Dashboard() {
                           <button className="btn btn-danger flex-grow-1" id="wd-unenroll-course-click"
                             onClick={(event) => {
                               event.preventDefault();
-                              dispatch(removeEnrollment({
-                                "user": currentUser._id,
-                                "course": c._id,
-                              }))
-                              // TODO fetch?
+                              removeEnrollmentHelper(currentUser._id, c._id);
                             }}>
                             Unenroll
                           </button>
@@ -176,11 +191,7 @@ export default function Dashboard() {
                           <button className="btn btn-success flex-grow-1" id="wd-enroll-course-click"
                             onClick={(event) => {
                               event.preventDefault();
-                              dispatch(addEnrollment({
-                                "user": currentUser._id,
-                                "course": c._id,
-                              }))
-                              // TODO fetch?
+                              createEnrollmentHelper(currentUser._id, c._id);
                             }}>
                             Enroll
                           </button>
