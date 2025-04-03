@@ -19,14 +19,14 @@ export default function Assignments() {
   const dispatch = useDispatch();
 
 
-  const fetchAssignments = async () => {
-    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
-    dispatch(setAssignments(assignments));
-  };
+  // const fetchAssignments = async () => {
+  //   const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+  //   dispatch(setAssignments(assignments));
+  // };
 
-  useEffect(() => {
-    fetchAssignments();
-  }, []);
+  // useEffect(() => {
+  //   fetchAssignments();
+  // }, []);
 
 
   const createNewAssignment = () => {

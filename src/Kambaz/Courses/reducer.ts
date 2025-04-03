@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { courses } from "../Database";
 
 const createEmptyCourse = () => {
     return {
@@ -17,7 +16,7 @@ const createEmptyCourse = () => {
 
 
 const initialState = {
-    courses: courses,
+    courses: [],
     course: createEmptyCourse(),
 };
 
@@ -27,6 +26,10 @@ const coursesSlice = createSlice({
     initialState,
 
     reducers: {
+        setCourses: (state, {payload: courses}) => {
+            state.courses = courses;
+        },
+
         addNewCourse: (state, {payload: course}) => {
             state.courses = [...state.courses, course] as any;
             state.course = createEmptyCourse();
@@ -41,10 +44,10 @@ const coursesSlice = createSlice({
         },
 
         updateCourse: (state,) => {
-            state.courses = state.courses.map((c: any) => c._id === state.course._id ? state.course : c);
+            state.courses = state.courses.map((c: any) => c._id === state.course._id ? state.course : c) as any;
         },
     }
 });
 
-export const { addNewCourse, setCourse, deleteCourse, updateCourse } = coursesSlice.actions;
+export const { setCourses, addNewCourse, setCourse, deleteCourse, updateCourse } = coursesSlice.actions;
 export default coursesSlice.reducer;

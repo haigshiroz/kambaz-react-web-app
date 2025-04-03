@@ -1,7 +1,7 @@
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addNewCourse, deleteCourse, setCourse, updateCourse } from "./Courses/reducer";
+import { setCourses, addNewCourse, deleteCourse, setCourse, updateCourse } from "./Courses/reducer";
 import { useEffect, useState } from "react";
 import { setEnrollments, addEnrollment, removeEnrollment } from "./Courses/People/reducer";
 import * as userClient from "./Account/client";
@@ -23,6 +23,9 @@ export default function Dashboard() {
   // Gets all courses, the current courses this user is in, and all enrollments 
   const fetchCoursesAndCoursesUserIsInAndEnrollments = async () => {
     try {
+      const serverAllCourses = await courseClient.fetchAllCourses();
+      dispatch(setCourses(serverAllCourses));
+
       const serverCoursesEnrolledIn = await userClient.findMyCourses();
       setCoursesFromServer(serverCoursesEnrolledIn);
 
