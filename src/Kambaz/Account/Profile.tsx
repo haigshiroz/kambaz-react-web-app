@@ -13,7 +13,10 @@ export default function Profile() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kambaz/Account/Signin");
+    if (!currentUser) {
+      return navigate("/Kambaz/Account/Signin");
+    }
+      
     setProfile(currentUser);
   };
 
@@ -23,7 +26,9 @@ export default function Profile() {
     navigate("/Kambaz/Account/Signin");
   };
 
-  useEffect(() => { fetchProfile(); }, []);
+  useEffect(() => { 
+    fetchProfile(); 
+  }, []);
 
   const updateProfile = async () => {
     const updatedProfile = await client.updateUser(profile);
