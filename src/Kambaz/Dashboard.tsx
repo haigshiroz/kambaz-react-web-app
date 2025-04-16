@@ -40,7 +40,7 @@ export default function Dashboard() {
   }, [currentUser]);
 
   const createNewCourse = async () => {
-    const newCourse = await userClient.createCourse(course);
+    const newCourse = await courseClient.createCourse(course);
 
     // Add course to redux
     dispatch(addNewCourse(newCourse));

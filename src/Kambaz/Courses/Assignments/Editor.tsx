@@ -45,7 +45,7 @@ export default function AssignmentEditor() {
     // Check if the assignment is in the current list. If not, add it to the end
     if (assignments.find((a: any) => a._id === assignment._id) === undefined) {
       // New assignment - POST
-      serverAssignmentResult = await coursesClient.createASsignmentForCourse(assignment.course, newAssignment);
+      serverAssignmentResult = await coursesClient.createAssignmentForCourse(assignment.course, newAssignment);
       dispatch(addAssignment(serverAssignmentResult)); // Add the assignment to local list of assignments
     } else {
       // Existing assignment - PUT
