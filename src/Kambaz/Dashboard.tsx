@@ -26,6 +26,9 @@ export default function Dashboard() {
       const serverAllCourses = await courseClient.fetchAllCourses();
       dispatch(setCourses(serverAllCourses));
 
+      // What textbook wants us to do
+      // setCoursesFromServer(serverAllCourses);
+
       const serverCoursesEnrolledIn = await userClient.findMyCourses();
       setCoursesFromServer(serverCoursesEnrolledIn);
 
