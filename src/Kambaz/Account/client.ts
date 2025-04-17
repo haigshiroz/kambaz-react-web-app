@@ -45,9 +45,14 @@ export const courses = async () => {
     return data;
 };
 
-export const findMyCourses = async () => {
-    const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
-    return data;
+// export const findMyCourses = async () => {
+//     const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
+//     return data;
+// };
+
+export const findCoursesForUser = async (userId: string) => {
+    const response = await axiosWithCredentials.get(`${USERS_API}/${userId}/courses`);
+    return response.data;
 };
 
 export const signin = async (credentials: any) => {
@@ -72,5 +77,15 @@ export const profile = async () => {
 
 export const signout = async () => {
     const response = await axiosWithCredentials.post(`${USERS_API}/signout`);
+    return response.data;
+};
+
+export const enrollIntoCourse = async (userId: string, courseId: string) => {
+    const response = await axiosWithCredentials.post(`${USERS_API}/${userId}/courses/${courseId}`);
+    return response.data;
+};
+
+export const unenrollFromCourse = async (userId: string, courseId: string) => {
+    const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}/courses/${courseId}`);
     return response.data;
 };

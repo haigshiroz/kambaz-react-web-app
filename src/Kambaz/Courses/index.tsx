@@ -22,7 +22,8 @@ export default function Courses() {
   const [usersForCourse, setUsersForCourse] = useState<any[]>([]);
 
   const fetchPeopleForCourse = async () => {
-    const users = await client.findPeopleForCourse(cid);
+    // const users = await client.findPeopleForCourse(cid);
+    const users = await client.findUsersForCourse(cid!);
     setUsersForCourse(users);
   };
 
@@ -76,7 +77,7 @@ export default function Courses() {
               <Route path="Assignments" element={<Assignments />} />
               <Route path="Assignments/:aid" element={<AssignmentEditor />} />
               <Route path="Quizzes" element={<h2>Quizzes</h2>} />
-              <Route path="People" element={<PeopleTable />} />
+              <Route path="People" element={<PeopleTable users={usersForCourse}/>} />
             </Routes>
           </div>
         </div>
