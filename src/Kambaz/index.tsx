@@ -57,7 +57,7 @@ export default function Kambaz() {
 
   const addNewCourseHelper = async () => {
     const newCourse = await courseClient.createCourse(course);
-    dispatch(addNewCourse([...courses, newCourse]));
+    dispatch(addNewCourse(newCourse));
   };
 
 
