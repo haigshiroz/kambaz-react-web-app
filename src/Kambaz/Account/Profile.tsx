@@ -7,9 +7,10 @@ import * as client from "./client";
 
 
 export default function Profile() {
-  const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const [profile, setProfile] = useState<any>({});
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchProfile = () => {
@@ -33,6 +34,7 @@ export default function Profile() {
   const updateProfile = async () => {
     const updatedProfile = await client.updateUser(profile);
     dispatch(setCurrentUser(updatedProfile));
+    setProfile(updatedProfile);
   };
 
   return (
