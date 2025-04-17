@@ -26,7 +26,7 @@ export default function KambazNavigation() {
       </ListGroup.Item>
 
       {/* Account */}
-      <ListGroup.Item as={Link} to="/Kambaz/Account" className={`text-center border-0 bg-black ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
+      <ListGroup.Item id="wd-account-link" as={Link} to="/Kambaz/Account" className={`text-center border-0 bg-black ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
         <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />
         <br />
         Account
@@ -34,7 +34,7 @@ export default function KambazNavigation() {
 
 
       {links.map((link) => (
-        <ListGroup.Item key={link.path} as={Link}
+        <ListGroup.Item id={`wd-${link.label}-link`} key={link.path} as={Link}
           to={link.path} className={`bg-black text-center border-0 
           ${pathname.includes(link.label) ? "text-danger bg-white" : "text-white bg-black"}`}>
 

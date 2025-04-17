@@ -24,7 +24,6 @@ export default function Kambaz() {
     try {
       let courses = await userClient.findCoursesForUser(currentUser._id);
       courses = courses.map((c: any) => {return {...c, enrolled: true}});
-      console.log("Setting courses - 31");
       dispatch(setCourses(courses));
     } catch (error) {
       console.error(JSON.stringify(error));
@@ -47,7 +46,6 @@ export default function Kambaz() {
         }
       });
 
-      console.log("Setting courses - 54");
       dispatch(setCourses(courses));
     } catch (error) {
       console.error(error);
@@ -67,7 +65,6 @@ export default function Kambaz() {
 
     if (status) {
       dispatch(deleteCourse(courseId));
-      console.log("Deleted course");
     } else {
       console.error("Error deleting a course");
     }
@@ -108,7 +105,6 @@ export default function Kambaz() {
       }
     });
 
-    console.log("Setting courses - 115");
     dispatch(setCourses(newCourses));
   };
 
