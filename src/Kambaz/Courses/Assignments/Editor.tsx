@@ -9,7 +9,7 @@ import * as assignmentsClient from "./client";
 
 
 export default function AssignmentEditor() {
-  const { assignment } = useSelector((state: any) => state.assignmentsReducer);
+  const { assignment, assignments } = useSelector((state: any) => state.assignmentsReducer);
 
   const dispatch = useDispatch();
 
@@ -39,7 +39,7 @@ export default function AssignmentEditor() {
       "submission_type": submissionType,
     }
 
-    const assignments = await coursesClient.findAssignmentsForCourse(assignment.course as string);
+    // const assignments = await coursesClient.findAssignmentsForCourse(assignment.course as string);
 
     let serverAssignmentResult = null;
 
