@@ -6,9 +6,9 @@ const createEmptyAssignment = () => {
         "_id": uuidv4(),
         "title": "Enter Title",
         "course": null, // cid
-        "date_available": JSON.stringify(new Date()),
-        "date_due": JSON.stringify(new Date()),
-        "date_until": JSON.stringify(new Date()),
+        "date_available": new Date(),
+        "date_due": new Date(),
+        "date_until": new Date(),
         "points": 100,
         "description": "Enter description",
         "assignment_group": "ASSIGNMENTS",

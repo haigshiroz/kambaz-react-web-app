@@ -24,6 +24,7 @@ export default function AssignmentEditor() {
   const [submissionType, setSubmissionType] = useState(assignment.submission_type);
 
   const saveAssignment = async () => {
+    // Construct new assignment from useState
     const newAssignment = {
       "_id": assignment._id,
       "title": title,
@@ -46,11 +47,11 @@ export default function AssignmentEditor() {
     if (assignments.find((a: any) => a._id === assignment._id) === undefined) {
       // New assignment - POST
       serverAssignmentResult = await coursesClient.createAssignmentForCourse(assignment.course, newAssignment);
-      dispatch(addAssignment(serverAssignmentResult)); // Add the assignment to local list of assignments
+      dispatch(addAssignment(newAssignment)); // Add the assignment to local list of assignments
     } else {
       // Existing assignment - PUT
       serverAssignmentResult = await assignmentsClient.updateAssignment(newAssignment);
-      dispatch(updateAssignment(serverAssignmentResult)); // Update the assignment in the local list of assignments
+      dispatch(updateAssignment(newAssignment)); // Update the assignment in the local list of assignments
     }
 
     dispatch(setAssignment(serverAssignmentResult)); // Set the assignment as the "focal" one (i.e. being edited)
