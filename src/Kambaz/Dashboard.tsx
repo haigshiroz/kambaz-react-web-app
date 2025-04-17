@@ -1,12 +1,5 @@
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
-// import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import { setCourses, addNewCourse, deleteCourse, setCourse, updateCourse } from "./Courses/reducer";
-// import { useEffect, useState } from "react";
-// import { setEnrollments, addEnrollment, removeEnrollment } from "./Courses/People/reducer";
-// import * as userClient from "./Account/client";
-// import * as courseClient from "./Courses/client";
-// import * as enrollmentClient from "./Courses/People/client";
 
 
 export default function Dashboard({courses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, isFaculty, updateEnrollment}:
@@ -23,98 +16,6 @@ export default function Dashboard({courses, course, setCourse, addNewCourse, del
     updateEnrollment: (courseId: string, enrolled: boolean) => void;
   }
 ) {
-
-
-
-
-  // Only used for display 
-  // const [coursesFromServer, setCoursesFromServer] = useState<any[]>([]);
-
-  // const { currentUser } = useSelector((state: any) => state.accountReducer);
-  // const { course } = useSelector((state: any) => state.coursesReducer);
-
-  // const dispatch = useDispatch();
-
-  // Gets all courses, the current courses this user is in, and all enrollments 
-  // const fetchCoursesAndCoursesUserIsInAndEnrollments = async () => {
-  //   try {
-  //     const serverAllCourses = await courseClient.fetchAllCourses();
-  //     dispatch(setCourses(serverAllCourses));
-
-  //     // What textbook wants us to do
-  //     // setCoursesFromServer(serverAllCourses);
-
-  //     const serverCoursesEnrolledIn = await userClient.findMyCourses();
-  //     setCoursesFromServer(serverCoursesEnrolledIn);
-
-  //     const enrollments = await enrollmentClient.getEnrollments();
-  //     dispatch(setEnrollments(enrollments)) ;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // }, [currentUser]);
-
-  // const createNewCourse = async () => {
-  //   const newCourse = await courseClient.createCourse(course);
-
-  //   // Add course to redux
-  //   dispatch(addNewCourse(newCourse));
-
-  //   // Locally add the new enrollment (since not updated with database)
-  //   const instructorEnrollment = {"user": currentUser._id, "course": newCourse._id,};
-  //   dispatch(addEnrollment(instructorEnrollment));
-
-  //   // Update display
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // }
-
-  // const deleteCourseHelper = async (courseId: string) => {
-  //   // Have server delete the course
-  //   const status = await courseClient.deleteCourse(courseId);
-  //   if (status) {
-  //     // Success
-  //     // Delete locally
-  //     dispatch(deleteCourse(courseId));
-  //   } else {
-  //     console.error("Error deleting a course");
-  //   }
-
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // };
-
-  // const updateCourseHelper = async () => {
-  //   // Have server update the course
-  //   const status = await courseClient.updateCourse(course);
-
-  //   if (status) {
-  //     // Success
-  //     // Update locally
-  //     dispatch(updateCourse());
-  //   } else {
-  //     console.error("Error updating a course");
-  //   }
-
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // };
-
-  // const createEnrollmentHelper = async (userId: string, courseId: string) => {
-  //   await enrollmentClient.createEnrollment(userId, courseId);
-  //   dispatch(addEnrollment({"user": userId, "course": courseId}));
-
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // }
-
-  // const removeEnrollmentHelper = async (userId: string, courseId: string) => {
-  //   await enrollmentClient.deleteEnrollment(userId, courseId);
-  //   dispatch(removeEnrollment({"user": userId, "course": courseId}));
-
-  //   fetchCoursesAndCoursesUserIsInAndEnrollments();
-  // }
-
-
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> 
@@ -174,7 +75,6 @@ export default function Dashboard({courses, course, setCourse, addNewCourse, del
                         <button onClick={(event) => {
                           event.preventDefault();
                           deleteCourse(c._id);
-                          // dispatch(deleteCourse(c._id));
                         }} className="btn btn-danger float-end" id="wd-delete-course-click">
                           Delete
                         </button>

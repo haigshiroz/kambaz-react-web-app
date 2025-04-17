@@ -22,7 +22,6 @@ export default function Courses() {
   const [usersForCourse, setUsersForCourse] = useState<any[]>([]);
 
   const fetchPeopleForCourse = async () => {
-    // const users = await client.findPeopleForCourse(cid);
     const users = await client.findUsersForCourse(cid!);
     setUsersForCourse(users);
   };
@@ -83,7 +82,6 @@ export default function Courses() {
         </div>
         :
         <div> Course not found. </div>}
-
     </div>
   );
 }

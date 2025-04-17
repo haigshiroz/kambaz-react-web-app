@@ -15,11 +15,7 @@ import { setCourses, addNewCourse, deleteCourse, setCourse, updateCourse } from 
 
 export default function Kambaz() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-
-
-  // const [course, setCourse] = useState<any[]>([]);
   const { course, courses } = useSelector((state: any) => state.coursesReducer);
-  // const [coursesFromServer, setCoursesFromServer] = useState<any[]>([]);
   const [enrolling, setEnrolling] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -72,7 +68,6 @@ export default function Kambaz() {
     if (status) {
       dispatch(deleteCourse(courseId));
       console.log("Deleted course");
-      // dispatch(setCourses(courses.filter((c: any) => c._id !== courseId)));  
     } else {
       console.error("Error deleting a course");
     }

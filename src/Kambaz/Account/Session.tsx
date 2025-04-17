@@ -19,14 +19,6 @@ export default function Session({ children }: { children: any }) {
             // Set user
             const currentUser = await client.profile();
             dispatch(setCurrentUser(currentUser));
-
-            // // Set enrollments
-            // const enrollments = await enrollmentClient.getEnrollments();
-            // dispatch(setEnrollments(enrollments));
-
-            // // Set courses
-            // const serverCourses = await coursesClient.fetchAllCourses();
-            // dispatch(setCourses(serverCourses));
         } catch (err: any) {
             console.error("Error in fetchProfile Session.tsx:\n" + JSON.stringify(err));
         }

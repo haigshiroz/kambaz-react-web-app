@@ -20,7 +20,7 @@ export const deleteCourse = async (id: string) => {
 };
 
 export const updateCourse = async (course: any) => {
-    const { data } = await axiosWithCredentials .put(`${COURSES_API}/${course._id}`, course);
+    const { data } = await axiosWithCredentials.put(`${COURSES_API}/${course._id}`, course);
     return data;
 };
 
@@ -47,13 +47,7 @@ export const createAssignmentForCourse = async (courseId: string, assignment: an
 };
 
 
-// export const findPeopleForCourse = async (courseId: any) => {
-//     const response = await axios.get(`${COURSES_API}/${courseId}/people`);
-//     return response.data;
-// };
-
 export const findUsersForCourse = async (courseId: string) => {
     const response = await axios.get(`${COURSES_API}/${courseId}/users`);
     return response.data;
-   };
-   
+};
