@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { setCourses } from "../Courses/reducer"
 import { setCurrentUser } from "./reducer";
-// import { setEnrollments } from "../Courses/People/reducer";
-// import { setCourses } from "../Courses/reducer";
-
+import * as userClient from "../Account/client";
 import * as client from "./client";
-// import * as enrollmentClient from "../Courses/People/client";
-// import * as coursesClient from "../Courses/client";
 
 
 export default function Session({ children }: { children: any }) {
@@ -19,6 +16,15 @@ export default function Session({ children }: { children: any }) {
             // Set user
             const currentUser = await client.profile();
             dispatch(setCurrentUser(currentUser));
+
+            // Get the courses with enrolled status
+            try {
+                let courses = await userClient.findCoursesForUser(currentUser._id);
+                courses = courses.map((c: any) => { return { ...c, enrolled: true } });
+                dispatch(setCourses(courses));
+            } catch (error) {
+                console.error(JSON.stringify(error));
+            }
         } catch (err: any) {
             console.error("Error in fetchProfile Session.tsx:\n" + JSON.stringify(err));
         }
